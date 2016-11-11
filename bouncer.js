@@ -27,7 +27,7 @@
 	****** Main Bouncer class ******
 	*******************************/
 	var Bouncer = function(ele, trigger_ele, behaviors, repeat_fire, type) {
-		this.main_ele = ele;
+		this.main_ele = ele;	
 		this.trigger_ele = trigger_ele;
 		this.behaviors = behaviors;
 		this.bouncer_type = type;
@@ -43,7 +43,7 @@
 	    },
 	    setEventHandlers: function() {
 	      this.setDefaultEvents();
-	      if (mobileCheck) {
+	      if (deviceType == "mobile") {
 	        this.setMobileEvents();
 	      } else {
 	        this.setDesktopEvents();
@@ -128,7 +128,7 @@
 			/* Abstract Method */
 		},
 		isDisabled: function() {
-			/* Abstract Method - Code should get overwritten */
+			/* Abstract Method */
 		},
 		setCookie: function(cookieName, value, expire) {
 			var d = new Date();
@@ -168,6 +168,10 @@
 		}
 	}
 
+	Overlay.prototype.create = function() {
+		this.setEventHandlers();
+	}
+
 	Overlay.prototype.setMobileTriggers = function() {  
 		var bouncer = this;
 		var ele = this.main_ele;
@@ -194,6 +198,7 @@
 
 	    
 	    $(ele, "input").prop('disabled', false);
+	    console.log("beep");
 		//TODO: set overlay - x out event
 		//TODO: Google analytics events 
 		//TODO: Form validation / Success ajex:beforeSend
@@ -247,4 +252,7 @@
 	    return false;
 	}
 
+
+
+	var bouncer = new Overlay(".bouncer-overlay", "html", [["mouseleave"]], false, "signup");
 })();
